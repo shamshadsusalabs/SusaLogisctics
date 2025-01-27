@@ -1,0 +1,177 @@
+<form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="space-y-6 bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+  <!-- Vehicle Information Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="flex flex-col">
+      <label for="vehicleName" class="text-lg font-semibold text-gray-700">Vehicle Name</label>
+      <input
+        id="vehicleName"
+        type="text"
+        formControlName="vehicleName"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('vehicleName')?.invalid && vehicleForm.get('vehicleName')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('vehicleName')?.invalid && vehicleForm.get('vehicleName')?.touched" class="text-red-500 text-sm mt-1">
+        Vehicle Name is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="vehicleNumber" class="text-lg font-semibold text-gray-700">Vehicle Number</label>
+      <input
+        id="vehicleNumber"
+        type="text"
+        formControlName="vehicleNumber"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('vehicleNumber')?.invalid && vehicleForm.get('vehicleNumber')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('vehicleNumber')?.invalid && vehicleForm.get('vehicleNumber')?.touched" class="text-red-500 text-sm mt-1">
+        Vehicle Number is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="insuranceImage" class="text-lg font-semibold text-gray-700">Insurance Image</label>
+      <input
+        id="insuranceImage"
+        type="file"
+        (change)="onFileChange($event, 'insuranceImage')"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('insuranceImage')?.invalid && vehicleForm.get('insuranceImage')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('insuranceImage')?.invalid && vehicleForm.get('insuranceImage')?.touched" class="text-red-500 text-sm mt-1">
+        Insurance Image is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Insurance Information Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="flex flex-col">
+      <label for="insuranceNumber" class="text-lg font-semibold text-gray-700">Insurance Number</label>
+      <input
+        id="insuranceNumber"
+        type="text"
+        formControlName="insuranceNumber"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('insuranceNumber')?.invalid && vehicleForm.get('insuranceNumber')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('insuranceNumber')?.invalid && vehicleForm.get('insuranceNumber')?.touched" class="text-red-500 text-sm mt-1">
+        Insurance Number is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col" formGroupName="dimensions">
+      <label for="length" class="text-lg font-semibold text-gray-700">Length</label>
+      <input
+        id="length"
+        type="number"
+        formControlName="length"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('dimensions.length')?.invalid && vehicleForm.get('dimensions.length')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('dimensions.length')?.invalid && vehicleForm.get('dimensions.length')?.touched" class="text-red-500 text-sm mt-1">
+        Length is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col" formGroupName="dimensions">
+      <label for="breadth" class="text-lg font-semibold text-gray-700">Breadth</label>
+      <input
+        id="breadth"
+        type="number"
+        formControlName="breadth"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('dimensions.breadth')?.invalid && vehicleForm.get('dimensions.breadth')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('dimensions.breadth')?.invalid && vehicleForm.get('dimensions.breadth')?.touched" class="text-red-500 text-sm mt-1">
+        Breadth is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Speed and Rate Information Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6" >
+    <div class="flex flex-col" formGroupName="speed">
+      <label for="kilometerPerHour" class="text-lg font-semibold text-gray-700">Speed (km/h)</label>
+      <input
+        id="kilometerPerHour"
+        type="number"
+        formControlName="kilometerPerHour"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('speed.kilometerPerHour')?.invalid && vehicleForm.get('speed.kilometerPerHour')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('speed.kilometerPerHour')?.invalid && vehicleForm.get('speed.kilometerPerHour')?.touched" class="text-red-500 text-sm mt-1">
+        Speed is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col" >
+      <label for="ratePerKilometer" class="text-lg font-semibold text-gray-700">Rate per Kilometer</label>
+      <input
+        id="ratePerKilometer"
+        type="number"
+        formControlName="ratePerKilometer"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('ratePerKilometer')?.invalid && vehicleForm.get('ratePerKilometer')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('ratePerKilometer')?.invalid && vehicleForm.get('ratePerKilometer')?.touched" class="text-red-500 text-sm mt-1">
+        Rate per Kilometer is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="location" class="text-lg font-semibold text-gray-700">Location</label>
+      <input
+        id="location"
+        type="text"
+        formControlName="location"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('location')?.invalid && vehicleForm.get('location')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('location')?.invalid && vehicleForm.get('location')?.touched" class="text-red-500 text-sm mt-1">
+        Location is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Information Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="flex flex-col">
+      <label for="capacity" class="text-lg font-semibold text-gray-700">Capacity</label>
+      <input
+        id="capacity"
+        type="number"
+        formControlName="capacity"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [ngClass]="{ 'border-red-500': vehicleForm.get('capacity')?.invalid && vehicleForm.get('capacity')?.touched }"
+      />
+      <div *ngIf="vehicleForm.get('capacity')?.invalid && vehicleForm.get('capacity')?.touched" class="text-red-500 text-sm mt-1">
+        Capacity is required.
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="lastServicedDate" class="text-lg font-semibold text-gray-700">Last Serviced Date</label>
+      <input
+        id="lastServicedDate"
+        type="date"
+        formControlName="lastServicedDate"
+        class="border border-gray-300 p-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Empty Placeholder to maintain layout consistency -->
+    <div class="flex flex-col"></div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-6">
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-600 disabled:bg-gray-400"
+      [disabled]="vehicleForm.invalid"
+    >
+      Add Vehicle
+    </button>
+  </div>
+</form>

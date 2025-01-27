@@ -1,0 +1,61 @@
+<!-- dashboard.component.html -->
+<div class="container mx-auto p-6">
+  <h1 class="text-4xl font-semibold text-gray-900 mb-6 text-center">Dashboard</h1>
+
+  <!-- Card Container -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <!-- Total Vehicles Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+      <div class="flex items-center space-x-4">
+        <div class="p-4 bg-blue-50 text-blue-600 rounded-full shadow-md">
+          <i class="fas fa-car fa-2x"></i> <!-- Add vehicle icon -->
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Total Vehicles</h3>
+          <p class="text-3xl font-semibold text-gray-900">{{ totalVehicles }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Types Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+      <div class="flex items-center space-x-4">
+        <div class="p-4 bg-green-50 text-green-600 rounded-full shadow-md">
+          <i class="fas fa-cogs fa-2x"></i> <!-- Add vehicle type icon -->
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Vehicle Types</h3>
+          <p class="text-3xl font-semibold text-gray-900">{{ vehicleTypes }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Invoices This Month Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+      <div class="flex items-center space-x-4">
+        <div class="p-4 bg-yellow-50 text-yellow-600 rounded-full shadow-md">
+          <i class="fas fa-file-invoice-dollar fa-2x"></i> <!-- Add invoice icon -->
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Invoices This Month</h3>
+          <p class="text-3xl font-semibold text-gray-900">{{ totalInvoicesThisMonth }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Invoices Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+      <div class="flex items-center space-x-4">
+        <div class="p-4 bg-pink-50 text-pink-600 rounded-full shadow-md">
+          <i class="fas fa-file-invoice fa-2x"></i> <!-- Add total invoice icon -->
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-700">Total Invoices</h3>
+          <p class="text-3xl font-semibold text-gray-900">{{ totalInvoices }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

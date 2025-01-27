@@ -1,0 +1,80 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-50">
+  <div class="w-full max-w-lg p-8 bg-white shadow-xl rounded-lg">
+    <!-- Logo Section -->
+    <div class="flex justify-center mb-8">
+      <img src="/logo.webp" alt="Logo" class="w-36 h-36 object-contain">
+    </div>
+
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Create an Account</h2>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <!-- User Type Selection -->
+      <div class="mb-6">
+        <label for="userType" class="block text-gray-700 text-sm font-medium">User Type</label>
+        <select id="userType" formControlName="userType"
+        class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+  <option value="vendor">Vendor</option>
+  <option value="operator">Operator</option>
+  <option value="patner">Partner</option>
+</select>
+
+        <div *ngIf="registrationForm.get('userType')?.invalid && registrationForm.get('userType')?.touched"
+             class="text-red-500 text-sm mt-1">
+          Please select a user type.
+        </div>
+      </div>
+
+      <!-- Name and Email Fields in a Row -->
+      <div class="flex gap-6 mb-6">
+        <div class="flex-1">
+          <label for="name" class="block text-gray-700 text-sm font-medium">Name</label>
+          <input id="name" formControlName="name" type="text" placeholder="Your Name"
+                 class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Name is required.
+          </div>
+        </div>
+
+        <div class="flex-1">
+          <label for="contactNumber" class="block text-gray-700 text-sm font-medium">Contact Number</label>
+          <input id="contactNumber" formControlName="contactNumber" type="text" placeholder="Your Contact Number"
+                 class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div *ngIf="registrationForm.get('contactNumber')?.invalid && registrationForm.get('contactNumber')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Contact number is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Password and Email Fields in a Row -->
+      <div class="flex gap-6 mb-6">
+        <div class="flex-1">
+          <label for="email" class="block text-gray-700 text-sm font-medium">Email</label>
+          <input id="email" formControlName="email" type="email" placeholder="Your Email"
+                 class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Please enter a valid email.
+          </div>
+        </div>
+
+        <div class="flex-1">
+          <label for="password" class="block text-gray-700 text-sm font-medium">Password</label>
+          <input id="password" formControlName="password" type="password" placeholder="Password"
+                 class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched"
+               class="text-red-500 text-sm mt-1">
+            Password is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="registrationForm.invalid"
+              class="w-full bg-blue-500 text-white p-4 rounded-md hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Register
+      </button>
+    </form>
+  </div>
+</div>

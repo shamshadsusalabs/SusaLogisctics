@@ -1,0 +1,69 @@
+<!-- history.component.html -->
+<div class="p-6">
+  <!-- Search Input -->
+  <div class="mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="searchInvoices()"
+      placeholder="Search invoices..."
+      class="w-full p-3 rounded-lg border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Table with Tailwind CSS -->
+  <div class="overflow-x-auto rounded-lg shadow-lg">
+    <table class="min-w-full bg-white table-auto border-collapse border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border px-4 py-2 text-left font-semibold">Pickup Location</th>
+          <th class="border px-4 py-2 text-left font-semibold">Drop Location</th>
+          <th class="border px-4 py-2 text-left font-semibold">Total Kilometer</th>
+          <th class="border px-4 py-2 text-left font-semibold">Order Date</th>
+          <th class="border px-4 py-2 text-left font-semibold">Vehicle Number</th> <!-- New column -->
+          <th class="border px-4 py-2 text-left font-semibold">Invoice URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of pagedInvoices">
+          <td class="border px-4 py-2">{{ invoice.pickupLocation }}</td>
+          <td class="border px-4 py-2">{{ invoice.dropLocation }}</td>
+          <td class="border px-4 py-2">{{ invoice.totalKilometer }}</td>
+          <td class="border px-4 py-2">{{ invoice.orderDate | date: 'short' }}</td>
+
+          <!-- Display vehicle numbers -->
+          <td class="border px-4 py-2">
+            <ul>
+              <li *ngFor="let vehicle of invoice.vehicles">
+                {{ vehicle.vehicleNumber }}
+              </li>
+            </ul>
+          </td>
+
+          <td class="border px-4 py-2">
+            <a [href]="invoice.invoiceUrl" target="_blank" class="text-blue-500 hover:underline">View Invoice</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="mt-4 flex justify-center">
+    <button
+      (click)="changePage(page - 1)"
+      [disabled]="page === 1"
+      class="px-4 py-2 mx-2 text-white bg-blue-500 rounded-lg disabled:bg-gray-400"
+    >
+      Previous
+    </button>
+    <span class="text-lg font-medium px-4 py-2">{{ page }} of {{ totalPages }}</span>
+    <button
+      (click)="changePage(page + 1)"
+      [disabled]="page === totalPages"
+      class="px-4 py-2 mx-2 text-white bg-blue-500 rounded-lg disabled:bg-gray-400"
+    >
+      Next
+    </button>
+  </div>
+</div>

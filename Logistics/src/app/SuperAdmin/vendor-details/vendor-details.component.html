@@ -1,0 +1,82 @@
+<div class="container mx-auto p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+    <!-- Card 1: Personal Information -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-6 py-4">
+        Personal Information
+      </div>
+      <div class="p-6 text-center">
+        <img
+          class="w-32 h-32 rounded-full mx-auto mb-4"
+          [src]="(selectedVendor$ | async)?.profilePic"
+          alt="Vendor Profile Picture"
+        />
+        <h2 class="text-xl font-bold">{{ (selectedVendor$ | async)?.name }}</h2>
+        <p class="text-gray-600">{{ (selectedVendor$ | async)?.email }}</p>
+        <p class="text-gray-600">{{ (selectedVendor$ | async)?.contactNumber }}</p>
+        <p class="text-gray-600">{{ (selectedVendor$ | async)?.address }}</p>
+      </div>
+    </div>
+
+    <!-- Card 2: Aadhaar Details -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-6 py-4">
+        Aadhaar Details
+      </div>
+      <div class="p-6">
+        <img
+          class="w-full h-80 rounded shadow"
+          [src]="(selectedVendor$ | async)?.aadhaarImage"
+          alt="Aadhaar Image"
+        />
+        <p class="text-gray-700 mt-4">
+          <span class="font-bold">Aadhaar Number:</span>
+          {{ (selectedVendor$ | async)?.gstNumber }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Card 3: GST Details -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-6 py-4">
+        GST Details
+      </div>
+      <div class="p-6">
+        <img
+          class="w-full h-auto rounded shadow"
+          [src]="(selectedVendor$ | async)?.gstImage"
+          alt="GST Image"
+        />
+        <p class="text-gray-700 mt-4">
+          <span class="font-bold">GST Number:</span>
+          {{ (selectedVendor$ | async)?.gstNumber }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Card 4: Full Profile Details -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-6 py-4">
+        Full Profile Details
+      </div>
+      <div class="p-6">
+        <p class="text-gray-700 mt-2">
+          <span class="font-bold">Name:</span> {{ (selectedVendor$ | async)?.name }}
+        </p>
+        <p class="text-gray-700 mt-2">
+          <span class="font-bold">Email:</span> {{ (selectedVendor$ | async)?.email }}
+        </p>
+        <p class="text-gray-700 mt-2">
+          <span class="font-bold">Contact:</span> {{ (selectedVendor$ | async)?.contactNumber }}
+        </p>
+        <p class="text-gray-700 mt-2">
+          <span class="font-bold">Address:</span> {{ (selectedVendor$ | async)?.address }}
+        </p>
+        <p class="text-gray-700 mt-2">
+          <span class="font-bold">GST Number:</span> {{ (selectedVendor$ | async)?.gstNumber }}
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+
+<div class="filter-buttons mb-4">
+  <button
+    *ngFor="let status of statusFilters"
+    class="btn"
+    [class.active]="activeStatusFilter === status"
+    (click)="filterByStatus(status)"
+  >
+    {{ status }}
+  </button>
+  <button
+    class="btn"
+    [class.active]="activeStatusFilter === null"
+    (click)="filterByStatus(null)"
+  >
+    Show All
+  </button>
+</div>
+<div class="mb-4">
+  <input
+    [(ngModel)]="searchText"
+    (input)="onSearchChange()"
+    type="text"
+    class="p-2 border rounded w-96"
+    placeholder="Search by vehicle name, number, or vendor name"
+  />
+</div>
+
+<div *ngIf="filteredVehicles.length > 0; else loading">
+  <table class="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Vehicle Name</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Vehicle Number</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Rate per Kilometer</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Speed (km/h)</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Status</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Vendor Name</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Vendor Contact</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Capacity</th>
+        <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicle of filteredVehicles" class="border-b hover:bg-gray-50">
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.vehicleName }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.vehicleNumber }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.ratePerKilometer }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.speed.kilometerPerHour }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.status }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.vendorName }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.vendorContactNumber }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.capacity }}</td>
+        <td class="py-2 px-4 text-sm text-gray-700">{{ vehicle.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #loading>
+  <div class="flex justify-center items-center py-6">
+    <p class="text-lg text-gray-600">Not Found...</p>
+  </div>
+</ng-template>

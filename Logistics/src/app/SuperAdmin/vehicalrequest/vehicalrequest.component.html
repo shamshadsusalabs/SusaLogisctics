@@ -1,0 +1,232 @@
+<div class="container mx-auto mt-6">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
+    Partner Vehicle Orders
+  </h1>
+
+  <!-- Search Bar -->
+  <div class="flex justify-between items-center mb-6">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="searchOrders()"
+      placeholder="Search orders..."
+      class="border border-gray-300 rounded-md p-3 w-1/3 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+    />
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto rounded-lg shadow-lg">
+    <table class="table-auto w-full border-collapse border border-gray-200 bg-white text-gray-700">
+      <thead class="bg-gray-100">
+        <tr>
+          <th
+            class="border border-gray-200 p-4 text-left font-semibold cursor-pointer"
+            (click)="sortOrders('partnerName')"
+          >
+            Partner Name
+            <span *ngIf="sortColumn === 'partnerName'">
+              {{ sortAscending ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Contact Number
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Vehicle Type
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Vehicle Count
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Pickup Location
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Drop Location
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Order Date
+          </th>
+          <th class="border border-gray-200 p-4 text-left font-semibold">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let order of getPaginatedOrders(); let i = index"
+          class="hover:bg-blue-50 transition-colors"
+          [class.bg-gray-50]="i % 2 === 0"
+        >
+          <td class="border border-gray-200 p-4">{{ order.partnerName }}</td>
+          <td class="border border-gray-200 p-4">{{ order.partnerContactNumber }}</td>
+          <td class="border border-gray-200 p-4">{{ order.vehicleType }}</td>
+          <td class="border border-gray-200 p-4">{{ order.vehicleCount }}</td>
+          <td class="border border-gray-200 p-4">{{ order.pickupLocation }}</td>
+          <td class="border border-gray-200 p-4">{{ order.dropLocation }}</td>
+          <td class="border border-gray-200 p-4">{{ order.orderDate }}</td>
+          <td class="border border-gray-200 p-4">
+            <button
+              (click)="openModal(order)"
+              class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+            >
+              Confirm
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-between items-center mt-6">
+    <button
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+      class="bg-blue-500 text-white px-4 py-2 rounded shadow-sm disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+      Previous
+    </button>
+    <span class="text-gray-700 font-medium">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="bg-blue-500 text-white px-4 py-2 rounded shadow-sm disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg w-1/2 max-h-[80vh] overflow-y-auto">
+    <h2 class="text-2xl font-bold mb-4">Confirm Order Details</h2>
+    <form (ngSubmit)="submitForm()">
+      <!-- Pickup and Drop Location -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div>
+          <label for="pickupLocation" class="block text-gray-700">Pickup Location</label>
+          <input
+            id="pickupLocation"
+            [(ngModel)]="modalData.pickupLocation"
+            name="pickupLocation"
+            required
+            class="border border-gray-300 rounded-md p-2 w-full"
+          />
+        </div>
+        <div>
+          <label for="dropLocation" class="block text-gray-700">Drop Location</label>
+          <input
+            id="dropLocation"
+            [(ngModel)]="modalData.dropLocation"
+            name="dropLocation"
+            required
+            class="border border-gray-300 rounded-md p-2 w-full"
+          />
+        </div>
+      </div>
+
+      <!-- Vehicle Details (repeat based on vehicleCount) -->
+      <div *ngFor="let vehicle of modalData.vehicles; let i = index">
+        <h3 class="text-xl font-semibold mt-4">Vehicle {{ i + 1 }} Details</h3>
+        <div class="grid grid-cols-3 gap-4">
+          <!-- Vehicle Capacity -->
+          <div>
+            <label for="vehicleCapacity" class="block text-gray-700">Select Vehicle Capacity</label>
+            <select
+              id="vehicleCapacity"
+              [(ngModel)]="vehicle.capacity"
+              name="vehicleCapacity"
+              (change)="filterVehiclesByCapacity()"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            >
+              <option *ngFor="let capacity of availableCapacities" [value]="capacity">
+                {{ capacity }} tons
+              </option>
+            </select>
+          </div>
+
+          <!-- Vehicle Number -->
+          <div>
+            <label for="vehicleNumber" class="block text-gray-700">Select Vehicle Number</label>
+            <select
+              id="vehicleNumber"
+              [(ngModel)]="vehicle.vehicleNumber"
+              name="vehicleNumber"
+              (change)="updateVehicleName(vehicle.vehicleNumber)"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            >
+              <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.vehicleNumber">
+                {{ vehicle.vehicleNumber }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Vehicle Name -->
+          <div>
+            <label for="vehicleName" class="block text-gray-700">Vehicle Name</label>
+            <input
+              id="vehicleName"
+              [(ngModel)]="vehicle.vehicleName"
+              name="vehicleName"
+              [ngModelOptions]="{ standalone: true }"
+              class="border border-gray-300 rounded-md p-2 w-full"
+              readonly
+            />
+          </div>
+        </div>
+
+        <!-- Additional Fields for Driver Info -->
+        <div *ngIf="vehicle.vehicleNumber" class="grid grid-cols-3 gap-4 mt-4">
+          <div>
+            <label for="RatePerkilometer" class="block text-gray-700">Rate Per Kilometer</label>
+            <input
+              id="RatePerkilometer"
+              [(ngModel)]="vehicle.RatePerkilometerAdmin"
+              name="RatePerkilometer"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            />
+          </div>
+          <div>
+            <label for="driverName" class="block text-gray-700">Driver Name</label>
+            <input
+              id="driverName"
+              [(ngModel)]="vehicle.driverName"
+              name="driverName"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            />
+          </div>
+          <div>
+            <label for="driverContactNumber" class="block text-gray-700">Driver Contact Number</label>
+            <input
+              id="driverContactNumber"
+              [(ngModel)]="vehicle.driverContactNumber"
+              name="driverContactNumber"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            />
+          </div>
+          <div>
+            <label for="driverNumber" class="block text-gray-700">Driver Number</label>
+            <input
+              id="driverNumber"
+              [(ngModel)]="vehicle.driverNumber"
+              name="driverNumber"
+              class="border border-gray-300 rounded-md p-2 w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancel and Submit Buttons -->
+      <div class="flex justify-between mt-6">
+        <button type="button" (click)="closeModal()" class="bg-gray-300 text-black px-4 py-2 rounded-md">
+          Cancel
+        </button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

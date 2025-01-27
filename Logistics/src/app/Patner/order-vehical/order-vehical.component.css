@@ -1,0 +1,4 @@
+.error {
+  color: #f87171; /* Red for errors */
+  font-size: 0.875rem; /* Smaller text for error messages */
+}

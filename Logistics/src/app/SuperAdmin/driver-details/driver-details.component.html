@@ -1,0 +1,78 @@
+<!-- Driver Profile and Aadhaar Card Section (Side by Side) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+  <!-- Driver Profile Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="flex flex-col items-center text-center">
+      <!-- Profile Picture -->
+      <div class="w-40 h-40 rounded-full overflow-hidden mb-6">
+        <img
+          [src]="(selectedDriver$ | async)?.profilePic || 'https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg'"
+          alt="Driver's Profile"
+          class="w-full h-full object-cover">
+      </div>
+
+      <!-- Driver Info -->
+      <h2 class="text-3xl font-semibold text-gray-800 mb-4">{{ (selectedDriver$ | async)?.name || 'Not Found' }}</h2>
+      <p *ngIf="(selectedDriver$ | async)?.driverNumber" class="text-gray-600 text-xl mb-2"><strong>Driver Number:</strong> {{ (selectedDriver$ | async)?.driverNumber }}</p>
+      <p *ngIf="(selectedDriver$ | async)?.licenseNumber" class="text-gray-600 text-xl mb-2"><strong>License Number:</strong> {{ (selectedDriver$ | async)?.licenseNumber }}</p>
+      <p *ngIf="(selectedDriver$ | async)?.aadhaarCard" class="text-gray-600 text-xl mb-2"><strong>Aadhaar Card:</strong> {{ (selectedDriver$ | async)?.aadhaarCard }}</p>
+      <p *ngIf="!(selectedDriver$ | async)?.driverNumber && !(selectedDriver$ | async)?.licenseNumber && !(selectedDriver$ | async)?.aadhaarCard" class="text-gray-600 text-xl mb-2">Not Found</p>
+    </div>
+  </div>
+
+  <!-- Aadhaar Card Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Aadhaar Card</h3>
+    <div class="flex flex-col items-center">
+      <!-- Aadhaar Image -->
+      <div *ngIf="(selectedDriver$ | async)?.aadhaarImage" class="w-40 h-40 rounded-lg overflow-hidden mb-6">
+        <img
+          [src]="(selectedDriver$ | async)?.aadhaarImage"
+          alt="Aadhaar Card"
+          class="w-full h-full object-cover">
+      </div>
+      <div *ngIf="!(selectedDriver$ | async)?.aadhaarImage" class="w-40 h-40 rounded-lg overflow-hidden mb-6">
+        <img
+          src="https://www.shutterstock.com/search/realistic-driver-license-men"
+          alt="Aadhaar Card Placeholder"
+          class="w-full h-full object-cover">
+      </div>
+      <p *ngIf="(selectedDriver$ | async)?.aadhaarCard" class="text-gray-600 text-lg"><strong>Aadhaar Card Number:</strong> {{ (selectedDriver$ | async)?.aadhaarCard }}</p>
+      <p *ngIf="!(selectedDriver$ | async)?.aadhaarCard" class="text-gray-600 text-lg">Not Found</p>
+    </div>
+  </div>
+</div>
+
+<!-- License Image and Contact Details Section (Side by Side) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+  <!-- License Image Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">License Image</h3>
+    <div class="flex flex-col items-center">
+      <!-- License Image -->
+      <div *ngIf="(selectedDriver$ | async)?.licenseImage" class="w-40 h-40 rounded-lg overflow-hidden mb-6">
+        <img
+          [src]="(selectedDriver$ | async)?.licenseImage"
+          alt="License Image"
+          class="w-full h-full object-cover">
+      </div>
+      <div *ngIf="!(selectedDriver$ | async)?.licenseImage" class="w-40 h-40 rounded-lg overflow-hidden mb-6">
+        <img
+          src="https://www.shutterstock.com/search/realistic-driver-license-men"
+          alt="License Image Placeholder"
+          class="w-full h-full object-cover">
+      </div>
+      <p *ngIf="(selectedDriver$ | async)?.licenseNumber" class="text-gray-600 text-lg"><strong>License Number:</strong> {{ (selectedDriver$ | async)?.licenseNumber }}</p>
+      <p *ngIf="!(selectedDriver$ | async)?.licenseNumber" class="text-gray-600 text-lg">Not Found</p>
+    </div>
+  </div>
+
+  <!-- Contact Details Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h3>
+    <p *ngIf="(selectedDriver$ | async)?.contactNumber" class="text-gray-600 text-lg"><strong>Phone:</strong> {{ (selectedDriver$ | async)?.contactNumber }}</p>
+    <p *ngIf="!(selectedDriver$ | async)?.contactNumber" class="text-gray-600 text-lg">Not Found</p>
+    <p *ngIf="(selectedDriver$ | async)?.address" class="text-gray-600 text-lg mt-2"><strong>Address:</strong> {{ (selectedDriver$ | async)?.address }}</p>
+    <p *ngIf="!(selectedDriver$ | async)?.address" class="text-gray-600 text-lg">Not Found</p>
+  </div>
+</div>

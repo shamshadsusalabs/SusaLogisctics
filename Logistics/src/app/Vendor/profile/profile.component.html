@@ -1,0 +1,162 @@
+<div class="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg">
+  <h2 class="text-3xl font-semibold text-center mb-8">Update Vendor Profile</h2>
+
+  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <!-- Name, Email and Password (First Row) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Vendor Name -->
+      <div class="mb-6">
+        <label for="name" class="block text-lg font-medium text-gray-700">Vendor Name</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter vendor name"
+        />
+        <div *ngIf="vendorForm.get('name')?.invalid && vendorForm.get('name')?.touched" class="text-red-600 text-sm mt-1">
+          Vendor name is required.
+        </div>
+      </div>
+
+      <!-- Email Address -->
+      <div class="mb-6">
+        <label for="email" class="block text-lg font-medium text-gray-700">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter email address"
+        />
+        <div *ngIf="vendorForm.get('email')?.invalid && vendorForm.get('email')?.touched" class="text-red-600 text-sm mt-1">
+          A valid email is required.
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6">
+        <label for="password" class="block text-lg font-medium text-gray-700">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter your new password"
+        />
+        <div *ngIf="vendorForm.get('password')?.invalid && vendorForm.get('password')?.touched" class="text-red-600 text-sm mt-1">
+          Password is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Number and GST Number (Second Row) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Contact Number -->
+      <div class="mb-6">
+        <label for="contactNumber" class="block text-lg font-medium text-gray-700">Contact Number</label>
+        <input
+          id="contactNumber"
+          type="text"
+          formControlName="contactNumber"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter contact number"
+        />
+        <div *ngIf="vendorForm.get('contactNumber')?.invalid && vendorForm.get('contactNumber')?.touched" class="text-red-600 text-sm mt-1">
+          A valid contact number is required.
+        </div>
+      </div>
+
+      <!-- Aadhaar Number -->
+      <div class="mb-6">
+        <label for="aadhaarNumber" class="block text-lg font-medium text-gray-700">Aadhaar Number</label>
+        <input
+          id="aadhaarNumber"
+          type="text"
+          formControlName="aadhaarNumber"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter Aadhaar number"
+        />
+        <div *ngIf="vendorForm.get('aadhaarNumber')?.invalid && vendorForm.get('aadhaarNumber')?.touched" class="text-red-600 text-sm mt-1">
+          A valid Aadhaar number is required.
+        </div>
+      </div>
+
+      <!-- GST Number -->
+      <div class="mb-6">
+        <label for="gstNumber" class="block text-lg font-medium text-gray-700">GST Number</label>
+        <input
+          id="gstNumber"
+          type="text"
+          formControlName="gstNumber"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter GST number (optional)"
+        />
+        <div *ngIf="vendorForm.get('gstNumber')?.invalid && vendorForm.get('gstNumber')?.touched" class="text-red-600 text-sm mt-1">
+          Please enter a valid GST number.
+        </div>
+      </div>
+    </div>
+    <!-- GST Image and Aadhaar Image (Third Row) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- GST Image -->
+      <div class="mb-6">
+        <label for="gstImage" class="block text-lg font-medium text-gray-700">GST Image</label>
+        <input
+          id="gstImage"
+          type="file"
+          (change)="onFileChange($event, 'gstImage')"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <!-- Aadhaar Image -->
+      <div class="mb-6">
+        <label for="aadhaarImage" class="block text-lg font-medium text-gray-700">Aadhaar Image</label>
+        <input
+          id="aadhaarImage"
+          type="file"
+          (change)="onFileChange($event, 'aadhaarImage')"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+    </div>
+
+    <!-- Address and Profile Picture (Fourth Row) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Address -->
+      <div class="mb-6">
+        <label for="address" class="block text-lg font-medium text-gray-700">Address</label>
+        <textarea
+          id="address"
+          formControlName="address"
+          rows="4"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Enter vendor address (optional)"
+        ></textarea>
+      </div>
+
+      <!-- Profile Picture -->
+      <div class="mb-6">
+        <label for="profilePic" class="block text-lg font-medium text-gray-700">Profile Picture</label>
+        <input
+          id="profilePic"
+          type="file"
+          (change)="onFileChange($event, 'profilePic')"
+          class="mt-2 p-3 w-full border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button
+        type="submit"
+        [disabled]="vendorForm.invalid"
+        class="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+      >
+        Update Profile
+      </button>
+    </div>
+  </form>
+</div>

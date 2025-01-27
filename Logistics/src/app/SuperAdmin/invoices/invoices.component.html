@@ -1,0 +1,40 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Invoices</h1>
+
+  <!-- Sort Button -->
+  <div class="flex justify-end mb-4">
+    <button
+      (click)="sortOrdersByDate()"
+      class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+    >
+      Sort by Order Date
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-left font-semibold text-gray-600">Order Date</th>
+          <th class="px-4 py-2 text-left font-semibold text-gray-600">Invoice URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of sortedOrders">
+          <td class="px-4 py-2 text-gray-800">{{ order.orderDate | date:'short' }}</td>
+          <td class="px-4 py-2">
+            <a [href]="order.invoiceUrl" target="_blank" class="text-blue-500 hover:underline">
+              View Invoice
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Orders Template -->
+  <ng-template #noOrders>
+    <p class="text-center text-gray-600 mt-6">No orders available.</p>
+  </ng-template>
+</div>

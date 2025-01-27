@@ -1,0 +1,185 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-6">Order Vehicle for Hub</h2>
+
+  <!-- Vehicle Count & Order Date -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <!-- Vehicle Count -->
+    <div>
+      <label for="vehicleCount" class="block text-sm font-medium text-gray-700">Vehicle Count</label>
+      <input
+        id="vehicleCount"
+        type="number"
+        formControlName="vehicleCount"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter the number of vehicles"
+        required
+      />
+      <div *ngIf="orderForm.get('vehicleCount')?.invalid && orderForm.get('vehicleCount')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter a valid vehicle count (minimum 1).</small>
+      </div>
+    </div>
+
+    <!-- Order Date -->
+    <div>
+      <label for="orderDate" class="block text-sm font-medium text-gray-700">Order Date</label>
+      <input
+        id="orderDate"
+        type="date"
+        formControlName="orderDate"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+      <div *ngIf="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please select an order date.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hub Address & Vehicle Type -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <!-- Hub Address -->
+    <div>
+      <label for="hubAddress" class="block text-sm font-medium text-gray-700">Hub Address</label>
+      <input
+        id="hubAddress"
+        type="text"
+        formControlName="hubAddress"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter hub address"
+        required
+      />
+      <div *ngIf="orderForm.get('hubAddress')?.invalid && orderForm.get('hubAddress')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter the hub address.</small>
+      </div>
+    </div>
+
+    <!-- Vehicle Type -->
+    <div>
+      <label for="vehicleType" class="block text-sm font-medium text-gray-700">Vehicle Type</label>
+      <input
+        id="vehicleType"
+        type="text"
+        formControlName="vehicleType"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter vehicle type"
+        required
+      />
+      <div *ngIf="orderForm.get('vehicleType')?.invalid && orderForm.get('vehicleType')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter the vehicle type.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capacity & Pickup Location -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <!-- Capacity -->
+    <div>
+      <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
+      <input
+        id="capacity"
+        type="number"
+        formControlName="capacity"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter capacity"
+        required
+      />
+      <div *ngIf="orderForm.get('capacity')?.invalid && orderForm.get('capacity')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter a valid capacity (minimum 1).</small>
+      </div>
+    </div>
+
+    <!-- Pickup Location -->
+    <div>
+      <label for="pickupLocation" class="block text-sm font-medium text-gray-700">Pickup Location</label>
+      <input
+        id="pickupLocation"
+        type="text"
+        formControlName="pickupLocation"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter pickup location"
+        required
+      />
+      <div *ngIf="orderForm.get('pickupLocation')?.invalid && orderForm.get('pickupLocation')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter the pickup location.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drop Location & Partner Name -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <!-- Drop Location -->
+    <div>
+      <label for="dropLocation" class="block text-sm font-medium text-gray-700">Drop Location</label>
+      <input
+        id="dropLocation"
+        type="text"
+        formControlName="dropLocation"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter drop location"
+        required
+      />
+      <div *ngIf="orderForm.get('dropLocation')?.invalid && orderForm.get('dropLocation')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter the drop location.</small>
+      </div>
+    </div>
+
+    <!-- Partner Name -->
+    <div>
+      <label for="partnerName" class="block text-sm font-medium text-gray-700">Partner Name</label>
+      <input
+        id="partnerName"
+        type="text"
+        formControlName="partnerName"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter partner name"
+        required
+      />
+      <div *ngIf="orderForm.get('partnerName')?.invalid && orderForm.get('partnerName')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter the partner name.</small>
+      </div>
+    </div>
+  </div>
+  <!-- Total Kilometer -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <!-- Total Kilometer -->
+    <div>
+      <label for="totalKilometer" class="block text-sm font-medium text-gray-700">Total Kilometer</label>
+      <input
+        id="totalKilometer"
+        type="number"
+        formControlName="totalKilometer"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter total kilometers"
+        required
+      />
+      <div *ngIf="orderForm.get('totalKilometer')?.invalid && orderForm.get('totalKilometer')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter a valid total kilometer (minimum 1).</small>
+      </div>
+    </div>
+
+    <!-- Partner Contact Number -->
+    <div>
+      <label for="partnerContactNumber" class="block text-sm font-medium text-gray-700">Partner Contact Number</label>
+      <input
+        id="partnerContactNumber"
+        type="text"
+        formControlName="partnerContactNumber"
+        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter partner contact number"
+        required
+      />
+      <div *ngIf="orderForm.get('partnerContactNumber')?.invalid && orderForm.get('partnerContactNumber')?.touched" class="text-red-500 text-sm mt-1">
+        <small>Please enter a valid 10-digit contact number.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    type="submit"
+    class="mt-4 w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    [disabled]="orderForm.invalid"
+  >
+    Submit Order
+  </button>
+</form>

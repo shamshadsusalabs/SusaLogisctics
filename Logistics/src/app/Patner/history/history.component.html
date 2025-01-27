@@ -1,0 +1,96 @@
+<div class="container mx-auto px-6 py-8 bg-white shadow-md rounded-lg">
+  <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b pb-4">
+    Vehicle Orders History
+  </h2>
+
+  <!-- Search Bar -->
+  <div class="flex justify-end mb-6">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="searchOrders()"
+      placeholder="Search orders..."
+      class="w-1/3 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Orders Table -->
+  <div class="overflow-x-auto">
+    <table class="table-auto w-full border border-gray-300 text-left text-sm rounded-lg">
+      <thead>
+        <tr class="bg-blue-100 text-gray-800 uppercase tracking-wide text-xs">
+          <th
+            class="border px-4 py-3 font-semibold cursor-pointer hover:bg-blue-200"
+            (click)="sortOrders('_id')"
+          >
+            Order ID
+          </th>
+          <th
+            class="border px-4 py-3 font-semibold cursor-pointer hover:bg-blue-200"
+            (click)="sortOrders('vehicleType')"
+          >
+            Vehicle Type
+          </th>
+          <th class="border px-4 py-3 font-semibold">Pickup Location</th>
+          <th class="border px-4 py-3 font-semibold">Drop Location</th>
+          <th
+            class="border px-4 py-3 font-semibold cursor-pointer hover:bg-blue-200"
+            (click)="sortOrders('partnerName')"
+          >
+            Partner Name
+          </th>
+          <th
+            class="border px-4 py-3 font-semibold cursor-pointer hover:bg-blue-200"
+            (click)="sortOrders('totalKilometer')"
+          >
+            Total KM
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let order of paginatedOrders"
+          class="hover:bg-gray-50 transition duration-200"
+        >
+          <td class="border px-4 py-3">{{ order._id }}</td>
+          <td class="border px-4 py-3">{{ order.vehicleType }}</td>
+          <td class="border px-4 py-3">{{ order.pickupLocation }}</td>
+          <td class="border px-4 py-3">{{ order.dropLocation }}</td>
+          <td class="border px-4 py-3">{{ order.partnerName }}</td>
+          <td class="border px-4 py-3">{{ order.totalKilometer }}</td>
+        </tr>
+        <tr *ngIf="paginatedOrders.length === 0">
+          <td colspan="6" class="border px-4 py-3 text-center text-gray-500">
+            No orders found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-between items-center mt-6">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="px-5 py-2 bg-blue-500 text-white font-medium rounded-md shadow hover:bg-blue-600 disabled:bg-blue-200"
+    >
+      Previous
+    </button>
+
+    <span class="text-gray-600">
+      Page <span class="font-semibold">{{ currentPage }}</span> of
+      <span class="font-semibold">
+        {{ Math.ceil(filteredOrders.length / itemsPerPage) }}
+      </span>
+    </span>
+
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage >= filteredOrders.length / itemsPerPage"
+      class="px-5 py-2 bg-blue-500 text-white font-medium rounded-md shadow hover:bg-blue-600 disabled:bg-blue-200"
+    >
+      Next
+    </button>
+  </div>
+</div>

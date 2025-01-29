@@ -5,7 +5,7 @@ const ConfirmOrder = require('../Schema/VendorInvoice');
 const mongoose = require('mongoose');
 async function createConfirmOrder(req, res) {
   try {
-    console.log('Request body:', req.body);
+  
 
     const { pickupLocation, dropLocation, totalKilometer, vehicles, partnerId } = req.body;
 
@@ -175,7 +175,7 @@ async function createConfirmOrder(req, res) {
         folder: 'invoices',
       });
 
-      console.log(`Uploaded Invoice for Vehicle ${i + 1}:`, uploadResult);
+    
 
       // Remove the temporary file after upload
       fs.unlinkSync(tempFilePath);

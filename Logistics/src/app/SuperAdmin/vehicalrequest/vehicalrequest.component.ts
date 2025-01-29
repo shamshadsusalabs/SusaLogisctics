@@ -8,6 +8,7 @@ import { VehicalService } from '../../Service/vehical.service';
 import { ConfirnorderService } from '../../Service/confirnorder.service';
 import { ConfirmOrder } from '../../Modals/confirmorder';
 import { VendorInvoiceService } from '../../Service/vendor-invoice.service';
+import { TripService } from '../../Service/trip.service';
 
 @Component({
   selector: 'app-vehicalrequest',
@@ -32,7 +33,7 @@ export class VehicalrequestComponent implements OnInit {
   modalData: any = {};
 
   constructor(private partnerVehicleOrderService: PatnerVehicalOrderService, private vehicalService: VehicalService,  private confirmOrderService:  ConfirnorderService,
-    private vendorInvoiceService:VendorInvoiceService
+    private vendorInvoiceService:VendorInvoiceService,private  tripService: TripService
    ) {}
 
   ngOnInit(): void {
@@ -196,49 +197,55 @@ export class VehicalrequestComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('Form Data:', this.modalData);
-
-    // Ensure the vehicles array has the required data
-    if (!this.modalData.pickupLocation || !this.modalData.dropLocation || this.modalData.vehicles.length === 0) {
-      console.error('Pickup location, drop location, and vehicles are required.');
-      return; // Don't proceed if validation fails
-    }
-
-    // Prepare the data for the confirm order
     const confirmOrderData: ConfirmOrder = {
       pickupLocation: this.modalData.pickupLocation,
       dropLocation: this.modalData.dropLocation,
       partnerId: this.modalData.partnerId,
       totalKilometer: this.modalData.totalKilometer,
-      vehicles: this.modalData.vehicles
+      vehicles: this.modalData.vehicles, // Ensure this contains multiple drivers
     };
 
-    // Call the service to create the confirm order
     this.confirmOrderService.createConfirmOrder(confirmOrderData).subscribe(
       (response) => {
-        console.log('Confirm Order created successfully:', response);
+        console.log("Confirm Order created successfully:", response);
 
-        // Call the second service to create the vendor invoice
+        // Create the vendor invoice
         this.vendorInvoiceService.createConfirmOrder(confirmOrderData).subscribe(
           (invoiceResponse) => {
-            console.log('Vendor invoice created successfully:', invoiceResponse);
-            // Handle success (e.g., show a success message or clear the form)
-            this.closeModal(); // Close the modal after submission
-            alert('Order and invoice created successfully!');
+            console.log("Vendor invoice created successfully:", invoiceResponse);
+
+            // Prepare data for each driver
+            const tripDataArray = this.modalData.vehicles.map((vehicle: { driverNumber: any; pickupLocation: any; dropLocation: any; distanceInKm: any; }) => ({
+              driverNumber: vehicle.driverNumber,
+              pickupLocation: vehicle.pickupLocation || this.modalData.pickupLocation,
+              dropLocation: vehicle.dropLocation || this.modalData.dropLocation,
+              distanceInKm: vehicle.distanceInKm || this.modalData.totalKilometer,
+            }));
+
+            // Call the trip creation service for each driver
+            tripDataArray.forEach((tripData: any) => {
+              this.tripService.createTrip(tripData).subscribe(
+                (tripResponse) => {
+                  console.log("Trip created successfully:", tripResponse);
+                },
+                (tripError) => {
+                  console.error("Error creating trip:", tripError);
+                }
+              );
+            });
+
+            this.closeModal();
+            alert("Order, invoice, and trips created successfully!");
           },
           (invoiceError) => {
-            console.error('Error creating vendor invoice:', invoiceError);
-            alert('Order created, but failed to create the invoice. Please try again.');
+            console.error("Error creating vendor invoice:", invoiceError);
           }
         );
       },
       (error) => {
-        console.error('Error creating confirm order:', error);
-        // Handle error (e.g., show an error message)
-        alert('Failed to create the order. Please try again.');
+        console.error("Error creating confirm order:", error);
       }
     );
   }
-
 
 }

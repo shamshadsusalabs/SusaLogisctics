@@ -63,6 +63,11 @@ const driverSchema = new mongoose.Schema(
       type: Boolean,
       default: false, // Defaults to false
     },
+    status: {
+      type: String,
+      enum: ["Free","Work"],
+      default: "Free",
+    },
   },
   
   {

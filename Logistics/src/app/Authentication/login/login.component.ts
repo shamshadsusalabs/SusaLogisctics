@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { Router, RouterLink } from '@angular/router'; // Optional: If you want to navigate on successful login
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import { SuperAdminService } from '../../Service/super-admin.service';
 import { VendorService } from '../../Service/vendor.service'; // Import VendorService
 import { PatnerLogin, SuperAdminLogin } from '../../Modals/login';
@@ -27,7 +28,7 @@ export class LoginComponent {
     private vendorService: VendorService, // Inject VendorService
     private router: Router,
     private operatorService: OperatorService,
-    private partnerService:  PatnerService, // Inject PartnerService// Inject OperatorService
+    private partnerService: PatnerService // Inject PartnerService
   ) {}
 
   ngOnInit(): void {
@@ -47,45 +48,52 @@ export class LoginComponent {
         case 'superadmin':
           this.superAdminService.login(credentials as SuperAdminLogin).subscribe(
             (response) => this.handleLoginSuccess(response, '/Super-Admin-dashboard'),
-            (error) => console.error('Superadmin login failed', error)
+            (error) => this.handleError(error)
           );
           break;
 
         case 'vendor':
           this.vendorService.login(credentials as VendorLogin).subscribe(
             (response) => this.handleLoginSuccess(response, '/Vendor-Admin-dashboard'),
-            (error) => console.error('Vendor login failed', error)
+            (error) => this.handleError(error)
           );
           break;
 
         case 'operator':
           this.operatorService.login(credentials as OperatorLogin).subscribe(
             (response) => this.handleLoginSuccess(response, '/Operator-Admin-dashboard'),
-            (error) => console.error('Operator login failed', error)
+            (error) => this.handleError(error)
           );
           break;
 
         case 'partner': // Handle Partner login
           this.partnerService.login(credentials as PatnerLogin).subscribe(
             (response) => this.handleLoginSuccess(response, '/Patner-Admin-dashboard'),
-            (error) => console.error('Partner login failed', error)
+            (error) => this.handleError(error)
           );
           break;
 
         default:
-          console.error('Invalid role');
+          Swal.fire('Error', 'Invalid role selected', 'error'); // Alert for invalid role
           break;
       }
     } else {
-      console.log('Form is not valid');
+      Swal.fire('Error', 'Please fill in all required fields correctly', 'error'); // Alert for invalid form
     }
   }
 
   private handleLoginSuccess(response: any, redirectUrl: string): void {
-    localStorage.setItem('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
-    localStorage.setItem('user', JSON.stringify(response.user));
-    this.router.navigate([redirectUrl]);
+    Swal.fire('Success', 'Login successful!', 'success').then(() => {
+      localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      this.router.navigate([redirectUrl]);
+    });
+  }
+
+  private handleError(error: any): void {
+    const errorMessage = error.error?.message || 'Something went wrong';
+    Swal.fire('Error', errorMessage, 'error'); // Alert for server error
   }
 
   get email() {

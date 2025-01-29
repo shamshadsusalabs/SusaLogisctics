@@ -67,6 +67,9 @@ app.use('/api/v1/confirmorder', confirmorder);
 const vendorInvoice = require('./Router/VendorInvoice');  // Import the User router
 app.use('/api/v1/vendorInvoice', vendorInvoice);
 
+const trip = require('./Router/Trip');  // Import the User router
+app.use('/api/v1/trip', trip);
+
 app.get("/", (req, res) => {
     res.send("Secure Server: Hello, world!");
 });

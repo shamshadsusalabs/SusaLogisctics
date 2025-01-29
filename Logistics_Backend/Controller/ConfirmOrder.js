@@ -252,7 +252,7 @@ async function createConfirmOrder(req, res) {
       folder: 'invoices', // Optional folder in Cloudinary
     });
 
-    console.log('Cloudinary Upload Result:', uploadResult);
+  
 
     // Remove the temporary file after upload
     fs.unlinkSync(tempFilePath);
@@ -272,7 +272,7 @@ async function createConfirmOrder(req, res) {
     });
 
     const savedOrder = await newConfirmOrder.save();
-    console.log('Order saved to database:', savedOrder);
+  
 
     res.status(201).json({
       message: 'Confirm Order created successfully with invoice',
